@@ -3,19 +3,23 @@ const resultBlock=document.querySelector('.resultBlock');
 const Height=document.querySelector('.inputHeight');
 const Weight=document.querySelector('.inputWeight');
 const reset=document.querySelector('.reset');
-const bmiText=document.querySelector('.bmiText');
+const bmiItem=document.querySelector('.bmiItem');
+const clearall=document.querySelector('.clearall');
+
 
 //監聽行為
 
 result.addEventListener('click',AccBMI,false);
+result.addEventListener('click',listResult,false);
+reset.addEventListener('click',returnBTN,false);
+clearall.addEventListener('click',clearList,false);
 
 
 
 //確認輸入的欄為是否有值
-//Height.addEventListener('blur',checkContent,false);
-//Weight.addEventListener('blur',checkContent,false);
+Height.addEventListener('blur',checkContent,false);
+Weight.addEventListener('blur',checkContent,false);
 
-window.onload=reset.addEventListener('click',returnBTN,false);
 function checkContent(e){
     let getValue=e.target.value;
     console.log(getValue)
@@ -66,29 +70,29 @@ const bmiStatesData = {
 
   function checkBmi(theBMI){
     if(theBMI<18.5){
-      console.log('過輕');
+      //console.log('過輕');
       addBtn('overThin');
     } else if(theBMI>=18.5 && theBMI<=25){
-        console.log('理想');
+        //console.log('理想');
         addBtn('normal');
     } else if(theBMI>25 && theBMI<=30){
-        console.log('過重');
+        //console.log('過重');
         addBtn('overWeight');
     } else if(theBMI>30 && theBMI<=35){
-        console.log('輕度肥胖');
+        //console.log('輕度肥胖');
         addBtn('mildFat');
     } else if(theBMI>35 && theBMI<=40){
-        console.log('中度肥胖');
+        //console.log('中度肥胖');
         addBtn('moderateFat');
     } else if(theBMI>40) {
-        console.log('重度肥胖');
+        //console.log('重度肥胖');
         addBtn('severeFat');
     } else{
         alert('您輸入的值有誤,請重新輸入');
     }
   };
 
-
+  let aryBmi=[];
 //BMI公式=體重kg/身高cm(m*m)
   function AccBMI(){
     //console.log('被點擊了');
@@ -102,51 +106,94 @@ const bmiStatesData = {
     document.querySelector('.resultBlock').classList.remove("d-none");
 
     checkBmi(theBMI);
-  };
-  let bmiHistoryData=[];
-  function addBtn(status){
-    let bmiObj={};
-    bmiObj.status=bmiStatesData[status].status;
-    bmiObj.color=bmiStatesData[status].color;
-    bmiObj.textColor=bmiStatesData[status].color_text;
-    bmiObj.borderColor=bmiStatesData[status].color_border;
-    bmiHistoryData.push(bmiObj);
-    //console.log(bmiHistoryData);
-    resultBlock.innerHTML=`<div class="BMIInfo btn ${bmiObj.borderColor} border-4 rounded-circle text-center position-relative">
-    <p class="bmiText ${bmiObj.textColor} fs-3 px-2 mb-0">BMI</p>
-    <p class=" ${bmiObj.textColor} fs-4 mb-1">${theBMI}</p>
-    <span class="material-icons reset position-absolute bottom-0 end-0">
-        autorenew
-    </span>
-  </div>
-  <p class="BMIstatus ${bmiObj.textColor} fs-3 mb-0 p-2">${bmiObj.status}</p>`
+    const time=new Date();     
+    
+    let bmiInfo = {};
+    bmiInfo.height=theHeight*100;
+    bmiInfo.weight=theWeight;
+    bmiInfo.bmi=theBMI;
+    bmiInfo.time=time.toLocaleString();
+    aryBmi.push(bmiInfo);
+    //localStorage
+    function saveResult(){
+      const stringBmi=  JSON.stringify(aryBmi);
+      localStorage.setItem('bmiInfo',stringBmi);
+    };
+    saveResult();
+
   };
   
+  
+function listResult(){
+  const getbmiInfo=localStorage.getItem('bmiInfo');
+  const bmiInfo=JSON.parse(getbmiInfo);
+  const getbmiResult=localStorage.getItem('bmiResult');
+  const bmiResult=JSON.parse(getbmiResult);
+  console.log(bmiResult);
+  //let bmi=Object.assign(bmiInfo,bmiResult);
+  //console.log(bmi);
+  function updatedList(){
+    let items='';
+    for (let i = 0; i < bmiInfo.length; i++) {
+      items +=`<tr class="list-border border-${bmiResult[i].color} text-center">
+        <th scope="row" data-num="${i+1}">${i+1}</th>
+        <td>${bmiInfo[i].height}</td>
+        <td>${bmiInfo[i].weight}</td>
+        <td>${bmiInfo[i].bmi}</td>
+        <td>${bmiResult[i].status}</td>
+        <td>${bmiInfo[i].time}</td>
+      </tr>`
+      bmiItem.innerHTML=items;
+    };
+  };
+  updatedList();
+}; 
+function checkLocalStorage(){
+  if(window.localStorage.lenth!==''){
+    listResult();
+  } else{ //以下不會執行
+    document.querySelector('.table').classList.add("d-none");
+    document.querySelector('.content').innerHTML=`<p>目前沒有任何BMI紀錄,請於上方輸入你的身高與體重</p>`;
+  
+  };
+};
+checkLocalStorage();
 
-
-
-//返回ㄎ
-
-function returnBTN(){
-    //console.log("resetBTN");
-    document.querySelector('.inputHeight').value='';
-    document.querySelector('.inputWeight').value='';
-    document.querySelector('.result').classList.remove("d-none");
-    document.querySelector('.resultBlock').classList.add("d-none");
-
+function addBtn(status){
+  let bmiObj={};
+  bmiObj.status=bmiStatesData[status].status;
+  bmiObj.color=bmiStatesData[status].color;
+  bmiObj.textColor=bmiStatesData[status].color_text;
+  bmiObj.borderColor=bmiStatesData[status].color_border;
+  let bmiHistoryData=[]; //放在function外面會跳錯；可是不放外面,bmiObj的內容會被覆蓋
+  bmiHistoryData.push(bmiObj);
+  
+  const stringBmi=  JSON.stringify(bmiHistoryData);
+  localStorage.setItem('bmiResult',stringBmi);
+  //console.log(bmiHistoryData);
+  resultBlock.innerHTML=`<div class="BMIInfo btn ${bmiObj.borderColor} border-4 p-4 rounded-circle text-center position-relative">
+  <p class="bmiText ${bmiObj.textColor} fs-4 px-2 mb-0">BMI</p>
+  <p class=" ${bmiObj.textColor} fs-5 px-2 mb-1">${theBMI}</p>
+  <span class="material-icons bg-${bmiObj.color} rounded-circle return-button position-absolute bottom-0 end-0">
+      autorenew
+  </span>
+  </div>
+  <p class="BMIstatus ${bmiObj.textColor} fs-4 mb-0 p-2">${bmiObj.status}</p>`
 };
 
-
-
-
-//localStorage
-
-
-
-/*function count(){
-    var hamPrice = 50;
-    var cokePrice = 20;
-    var hamTotalPrice = parseInt(document.getElementById('hamNumId').value)*hamPrice;
-    var cokeTotalPrice = parseInt(document.getElementById('cokeNumId').value)*cokePrice;
-    document.getElementById('totalId').textContent = hamTotalPrice + cokeTotalPrice;
-  }*/
+function returnBTN(e){
+    //console.log(e.target.nodeName);
+    if(e.target.nodeName==='SPAN'){
+      Height.value='';
+      Weight.value='';
+      document.querySelector('.result').classList.remove("d-none");
+      document.querySelector('.resultBlock').classList.add("d-none");
+    } else{
+      console.log('錯誤')
+    }
+    
+};
+function clearList(){
+  localStorage.clear();
+  listResult();
+};

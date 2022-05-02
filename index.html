@@ -13,27 +13,28 @@
 </head>
 
 <body>
-    <div class="bg-secondary">
+    <div class="bg-dark">
         <div class="banner mx-auto d-flex justify-content-around align-items-stretch">
             <a href="#"><img src="assets/image/BMICLogo.png" alt="logo"></a>
             <div>
                 <p class="text-warning mb-1 fs-6">身高 cm</p>
-                <input type="number" class="border rounded-3 border-warning mb-2 bg-dark inputHeight text-white"
+                <input type="number" class="border p-1 rounded-3 border-warning mb-2 bg-dark inputHeight text-white"
                     placeholder="請輸入身高">
                 <p class="text-warning mb-1 fs-6">體重 kg</p>
-                <input type="number" class="border rounded-3 border-warning bg-dark inputWeight text-white"
+                <input type="number" class="border p-1 rounded-3 border-warning bg-dark inputWeight text-white"
                     placeholder="請輸入體重">
             </div>
             <button type="button" class="btn btn-warning rounded-circle px-3 text-dark fw-bold fs-3 result">看結果</button>
-            <div class="resultBlock d-flex align-items-center">
+            <div class="resultBlock reset d-flex align-items-center">
             </div>
         </div>
     </div>
-    <div class="content">
-        <h3 class="text-dark text-center my-3">BMI 紀錄</h1>
+    <div class="content position-relative">
+        <h3 class="text-dark text-center my-3 ">BMI 紀錄</h1>
+            <button type="button" class="btn btn-warning clearall position-absolute top-0 end-0 ">清空所有資料</button>
             <table class="table">
                 <thead>
-                    <tr>
+                    <tr class="text-center">
                         <th scope="col">序號</th>
                         <th scope="col">身高</th>
                         <th scope="col">體重</th>
@@ -42,15 +43,8 @@
                         <th scope="col">紀錄時間</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr class="bmiItem">
-                        <th scope="row">1</th>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
+                <tbody class="bmiItem border-0">
+                    
                 </tbody>
             </table>
     </div>
