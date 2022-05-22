@@ -1,17 +1,22 @@
+//宣告
+let aryBmi=[];
+let theBMI;
+let bmiHistoryData=[]; //放在function外面會跳錯；可是不放外面,bmiObj的內容會被覆蓋
+
+
+//抓取所需的DOM
 const result=document.querySelector('.result');
 const resultBlock=document.querySelector('.resultBlock');
 const Height=document.querySelector('.inputHeight');
 const Weight=document.querySelector('.inputWeight');
-const reset=document.querySelector('.reset');
 const bmiItem=document.querySelector('.bmiItem');
 const clearall=document.querySelector('.clearall');
 
 
 //監聽行為
-
 result.addEventListener('click',AccBMI,false);
 result.addEventListener('click',listResult,false);
-reset.addEventListener('click',returnBTN,false);
+resultBlock.addEventListener('click',returnBTN,false);
 clearall.addEventListener('click',clearList,false);
 
 
@@ -92,35 +97,41 @@ const bmiStatesData = {
     }
   };
 
-  let aryBmi=[];
+  
 //BMI公式=體重kg/身高cm(m*m)
+  
   function AccBMI(){
     //console.log('被點擊了');
-    const theHeight=(Height.value)/100;
-    const theWeight=Weight.value;
-    //console.log(theHeight);
-    //console.log(theWeight);
-    theBMI=(theWeight/(theHeight*theHeight)).toFixed(2);
-    //console.log(theBMI);
-    document.querySelector('.result').classList.add("d-none");
-    document.querySelector('.resultBlock').classList.remove("d-none");
+    if(Height.value!=='' && Weight.value!==''){
+      let theHeight=(parseInt(Height.value))/100;
+      let theWeight=parseInt(Weight.value);
+      //console.log(typeof theHeight);
+      //console.log(typeof theWeight);
+      theBMI=parseFloat((theWeight/(theHeight*theHeight)).toFixed(2));
+      console.log(typeof theBMI);
+      result.classList.add("d-none");
+      resultBlock.classList.remove("d-none");
 
-    checkBmi(theBMI);
-    const time=new Date();     
+      checkBmi(theBMI);
+      const time=new Date();     
+      
+      let bmiInfo = {};
+      bmiInfo.height=theHeight*100;
+      bmiInfo.weight=theWeight;
+      bmiInfo.bmi=theBMI;
+      bmiInfo.time=time.toLocaleString();
+      aryBmi.push(bmiInfo);
+      //localStorage
+      function saveResult(){
+        const stringBmi=  JSON.stringify(aryBmi);
+        localStorage.setItem('bmiInfo',stringBmi);
+      };
+      saveResult();
+
+    } else{
+      alert('資料不完整, 請輸入你的身高與體重');
+    }
     
-    let bmiInfo = {};
-    bmiInfo.height=theHeight*100;
-    bmiInfo.weight=theWeight;
-    bmiInfo.bmi=theBMI;
-    bmiInfo.time=time.toLocaleString();
-    aryBmi.push(bmiInfo);
-    //localStorage
-    function saveResult(){
-      const stringBmi=  JSON.stringify(aryBmi);
-      localStorage.setItem('bmiInfo',stringBmi);
-    };
-    saveResult();
-
   };
   
   
@@ -134,7 +145,7 @@ function listResult(){
   //console.log(bmi);
   function updatedList(){
     let items='';
-    for (let i = 0; i < bmiInfo.length; i++) {
+    for (let i = 0; i < bmiResult.length; i++) {
       items +=`<tr class="list-border border-${bmiResult[i].color} text-center">
         <th scope="row" data-num="${i+1}">${i+1}</th>
         <td>${bmiInfo[i].height}</td>
@@ -143,13 +154,14 @@ function listResult(){
         <td>${bmiResult[i].status}</td>
         <td>${bmiInfo[i].time}</td>
       </tr>`
-      bmiItem.innerHTML=items;
+      
     };
+    bmiItem.innerHTML=items;
   };
   updatedList();
 }; 
 function checkLocalStorage(){
-  if(window.localStorage.lenth!==''){
+  if(window.localStorage.lenth!==0){
     listResult();
   } else{ //以下不會執行
     document.querySelector('.table').classList.add("d-none");
@@ -165,7 +177,6 @@ function addBtn(status){
   bmiObj.color=bmiStatesData[status].color;
   bmiObj.textColor=bmiStatesData[status].color_text;
   bmiObj.borderColor=bmiStatesData[status].color_border;
-  let bmiHistoryData=[]; //放在function外面會跳錯；可是不放外面,bmiObj的內容會被覆蓋
   bmiHistoryData.push(bmiObj);
   
   const stringBmi=  JSON.stringify(bmiHistoryData);
@@ -186,14 +197,14 @@ function returnBTN(e){
     if(e.target.nodeName==='SPAN'){
       Height.value='';
       Weight.value='';
-      document.querySelector('.result').classList.remove("d-none");
-      document.querySelector('.resultBlock').classList.add("d-none");
+      result.classList.remove("d-none");
+      resultBlock.classList.add("d-none");
     } else{
       console.log('錯誤')
     }
     
 };
 function clearList(){
-  localStorage.clear();
-  listResult();
+  localStorage.clear();//清空 localstorage
+  checkLocalStorage(); //初始化
 };

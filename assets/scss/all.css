@@ -1,3 +1,4 @@
+@charset "UTF-8";
 *,
 *::before,
 *::after {
@@ -641,43 +642,43 @@ fieldset:disabled .btn {
 
 .btn-warning {
   color: #000;
-  background-color: #777777;
-  border-color: #777777;
+  background-color: #FFD366;
+  border-color: #FFD366;
 }
 
 .btn-warning:hover {
   color: #000;
-  background-color: #8b8b8b;
-  border-color: #858585;
+  background-color: #ffda7d;
+  border-color: #ffd775;
 }
 
 .btn-check:focus + .btn-warning, .btn-warning:focus {
   color: #000;
-  background-color: #8b8b8b;
-  border-color: #858585;
-  -webkit-box-shadow: 0 0 0 0.25rem rgba(101, 101, 101, 0.5);
-          box-shadow: 0 0 0 0.25rem rgba(101, 101, 101, 0.5);
+  background-color: #ffda7d;
+  border-color: #ffd775;
+  -webkit-box-shadow: 0 0 0 0.25rem rgba(217, 179, 87, 0.5);
+          box-shadow: 0 0 0 0.25rem rgba(217, 179, 87, 0.5);
 }
 
 .btn-check:checked + .btn-warning,
 .btn-check:active + .btn-warning, .btn-warning:active, .btn-warning.active,
 .show > .btn-warning.dropdown-toggle {
   color: #000;
-  background-color: #929292;
-  border-color: #858585;
+  background-color: #ffdc85;
+  border-color: #ffd775;
 }
 
 .btn-check:checked + .btn-warning:focus,
 .btn-check:active + .btn-warning:focus, .btn-warning:active:focus, .btn-warning.active:focus,
 .show > .btn-warning.dropdown-toggle:focus {
-  -webkit-box-shadow: 0 0 0 0.25rem rgba(101, 101, 101, 0.5);
-          box-shadow: 0 0 0 0.25rem rgba(101, 101, 101, 0.5);
+  -webkit-box-shadow: 0 0 0 0.25rem rgba(217, 179, 87, 0.5);
+          box-shadow: 0 0 0 0.25rem rgba(217, 179, 87, 0.5);
 }
 
 .btn-warning:disabled, .btn-warning.disabled {
   color: #000;
-  background-color: #777777;
-  border-color: #777777;
+  background-color: #FFD366;
+  border-color: #FFD366;
 }
 
 .btn-danger {
@@ -940,36 +941,36 @@ fieldset:disabled .btn {
 }
 
 .btn-outline-warning {
-  color: #777777;
-  border-color: #777777;
+  color: #FFD366;
+  border-color: #FFD366;
 }
 
 .btn-outline-warning:hover {
   color: #000;
-  background-color: #777777;
-  border-color: #777777;
+  background-color: #FFD366;
+  border-color: #FFD366;
 }
 
 .btn-check:focus + .btn-outline-warning, .btn-outline-warning:focus {
-  -webkit-box-shadow: 0 0 0 0.25rem rgba(119, 119, 119, 0.5);
-          box-shadow: 0 0 0 0.25rem rgba(119, 119, 119, 0.5);
+  -webkit-box-shadow: 0 0 0 0.25rem rgba(255, 211, 102, 0.5);
+          box-shadow: 0 0 0 0.25rem rgba(255, 211, 102, 0.5);
 }
 
 .btn-check:checked + .btn-outline-warning,
 .btn-check:active + .btn-outline-warning, .btn-outline-warning:active, .btn-outline-warning.active, .btn-outline-warning.dropdown-toggle.show {
   color: #000;
-  background-color: #777777;
-  border-color: #777777;
+  background-color: #FFD366;
+  border-color: #FFD366;
 }
 
 .btn-check:checked + .btn-outline-warning:focus,
 .btn-check:active + .btn-outline-warning:focus, .btn-outline-warning:active:focus, .btn-outline-warning.active:focus, .btn-outline-warning.dropdown-toggle.show:focus {
-  -webkit-box-shadow: 0 0 0 0.25rem rgba(119, 119, 119, 0.5);
-          box-shadow: 0 0 0 0.25rem rgba(119, 119, 119, 0.5);
+  -webkit-box-shadow: 0 0 0 0.25rem rgba(255, 211, 102, 0.5);
+          box-shadow: 0 0 0 0.25rem rgba(255, 211, 102, 0.5);
 }
 
 .btn-outline-warning:disabled, .btn-outline-warning.disabled {
-  color: #777777;
+  color: #FFD366;
   background-color: transparent;
 }
 
@@ -1145,59 +1146,15 @@ fieldset:disabled .btn {
   }
 }
 
-/* http://meyerweb.com/eric/tools/css/reset/ 
-   v2.0 | 20110126
-   License: none (public domain)
-*/
-html, body, div, span, applet, object, iframe,
-h1, h2, h3, h4, h5, h6, p, blockquote, pre,
-a, abbr, acronym, address, big, cite, code,
-del, dfn, em, img, ins, kbd, q, s, samp,
-small, strike, strong, sub, sup, tt, var,
-b, u, i, center,
-dl, dt, dd, ol, ul, li,
-fieldset, form, label, legend,
-table, caption, tbody, tfoot, thead, tr, th, td,
-article, aside, canvas, details, embed,
-figure, figcaption, footer, header, hgroup,
-menu, nav, output, ruby, section, summary,
-time, mark, audio, video {
+html, body {
+  height: 100%;
+  /*外層高度100%*/
   margin: 0;
-  padding: 0;
-  border: 0;
-  font-size: 100%;
-  font: inherit;
-  vertical-align: baseline;
 }
 
-/* HTML5 display-role reset for older browsers */
-article, aside, details, figcaption, figure,
-footer, header, hgroup, menu, nav, section {
-  display: block;
-}
-
-body {
-  line-height: 1;
-}
-
-ol,
-ul {
-  list-style: none;
-}
-
-blockquote, q {
-  quotes: none;
-}
-
-blockquote:before, blockquote:after,
-q:before, q:after {
-  content: '';
-  content: none;
-}
-
-table {
-  border-collapse: collapse;
-  border-spacing: 0;
+.wrap {
+  min-height: calc(100% - 100px);
+  /*減去footer高度*/
 }
 
 img, .button {
@@ -1208,6 +1165,10 @@ img, .button {
 .banner {
   max-width: 50%;
   padding: 50px 0;
+}
+
+.result {
+  width: 20%;
 }
 
 .return-button {
@@ -1225,6 +1186,8 @@ img, .button {
 .content {
   max-width: 70%;
   margin: 0 auto;
+  padding-bottom: 280px;
+  /*避免文字超出瀏覽器時，內容區塊不會和footer打架*/
 }
 
 .list-border {
@@ -1235,5 +1198,7 @@ img, .button {
   background-color: #FFD366;
   text-align: center;
   padding: 20px 0;
+  height: 100px;
+  /*設定footer本身高度*/
 }
 /*# sourceMappingURL=all.css.map */
